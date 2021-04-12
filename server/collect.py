@@ -2,11 +2,11 @@
 import database as db
 import requests
 import sys
-from config import alphavantage_api_key, finnhub_api_key
+# from config import alphavantage_api_key, finnhub_api_key
 import time
 
-args = sys.argv[1:]
-ticker, interval = args
+# args = sys.argv[1:]
+# ticker, interval = args
 
 
 # drop any existing tables
@@ -40,16 +40,16 @@ for key in data.keys():
 # ----- source 2 -----
 # download data given interval
 # https://finnhub.io/docs/api/quote
-q = f"https://finnhub.io/api/v1/quote?symbol={ticker}&token={finnhub_api_key}"
-while True:
-    r = requests.get(q)
-    data = r.json()
+# q = f"https://finnhub.io/api/v1/quote?symbol={ticker}&token={finnhub_api_key}"
+# while True:
+#     r = requests.get(q)
+#     data = r.json()
 
-    open = data['o']
-    high = data['h']
-    low = data['l']
-    close = data['c']
-    t = data['t'] # UTC ?
-    db.insert(ticker, t, float(open), float(high), float(low), float(close))
-    time.sleep(int(interval))
+#     open = data['o']
+#     high = data['h']
+#     low = data['l']
+#     close = data['c']
+#     t = data['t'] # UTC ?
+#     db.insert(ticker, t, float(open), float(high), float(low), float(close))
+#     time.sleep(int(interval))
 

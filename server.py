@@ -2,11 +2,13 @@ from config import api_key
 
 import flask
 from flask import request
-import database as db
+import server.database as db
 import subprocess
 import sys
 
 app = flask.Flask(__name__)
+
+tickers = {}
 
 @app.route('/api/v1/price', methods=['GET'])
 def api_price():
@@ -56,6 +58,10 @@ def api_del_ticker(ticker):
         2=ticker not found
     """
     #TODO: Delete data from database, and stop process for ticket
+    # stop process
+    # tickers[ticker].kill()
+    # delete data from database
+    # db.execute(db.de)
     pass
 
 @app.route('/api/v1/add/<ticker>/<interval>', methods=['POST'])
@@ -71,7 +77,8 @@ def api_add_ticker(ticker, interval):
     """
 
     #TODO: Run subprocess
-    # subprocess.Popen(["python3", "./collect.py", ticker, interval])
+    # p = subprocess.Popen(["python3", "./server/collect.py", ticker, interval])
+    # tickers[ticker] = p
     pass
 
 @app.route('/api/v1/reset', methods=['DELETE'])
