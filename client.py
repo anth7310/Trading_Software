@@ -1,7 +1,7 @@
 import sys
-from controller import Controller
-from service import Service
-from dao import Dao
+from client.controller import Controller
+from client.service import Service
+from client.dao import Dao
 
 
 # init dependency chain

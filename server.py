@@ -4,8 +4,7 @@ import flask
 from flask import request
 import database as db
 import subprocess
-
-
+import sys
 
 app = flask.Flask(__name__)
 
@@ -23,7 +22,7 @@ def api_price():
     data = {}
     for query in queries:
         data[query] = request.args.get(query)
-    # TODO: return output
+    # TODO: make sql to database and format result
     return data
 
 @app.route('/api/v1/signal', methods=['GET'])
@@ -56,11 +55,11 @@ def api_del_ticker(ticker):
         1=server error
         2=ticker not found
     """
-    #TODO: Delete data from database
+    #TODO: Delete data from database, and stop process for ticket
     pass
 
-@app.route('/api/v1/add/<ticker>', methods=['POST'])
-def api_add_ticker(ticker):
+@app.route('/api/v1/add/<ticker>/<interval>', methods=['POST'])
+def api_add_ticker(ticker, interval):
     """
     Instruct server to add a ticker to the server database. Server will
     download historical data for said ticket, and start appending
@@ -70,7 +69,9 @@ def api_add_ticker(ticker):
         1=server error
         2=ticker not found
     """
+
     #TODO: Run subprocess
+    # subprocess.Popen(["python3", "./collect.py", ticker, interval])
     pass
 
 @app.route('/api/v1/reset', methods=['DELETE'])
@@ -84,10 +85,22 @@ def api_reset(ticker):
     db.delete()
 
 
-
 if __name__ == "__main__":
-    # run subprocess in background
-    # subprocess.Popen(["python3", "./collect.py", ])
     ip = "127.0.0.1"
     port = 8000
+    # TODO: CLI arguments for server app
+    args = sys.argv[1:]
+    if len(args) > 0:
+        cmd = args[0]
+        if cmd == '--tickers':
+            pass
+        elif cmd == '--port':
+            pass
+        elif cmd == '--reload':
+            pass
+        elif cmd == '--minutes':
+            pass
+        else:
+            print("Illegal arguement")
+
     app.run(host=ip, port=port, debug=True)
